@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ClassLibrary1
 {
     public class Class1
     {
+        private static readonly object LockObject = new object();
         readonly List<int> _list = new List<int>();
         public void Run()
         {
@@ -14,11 +13,14 @@ namespace ClassLibrary1
             {
                 Task.Run(() =>
                 {
-                    _list.Add(i);
-                    if (_list.Count >= 50)
+                    lock (LockObject)
                     {
-                        Class2.DoThings(_list);
-                        _list.Clear();
+                        _list.Add(i);
+                        if (_list.Count >= 50)
+                        {
+                            Class2.DoThings(_list);
+                            _list.Clear();
+                        }
                     }
                 });
             }
