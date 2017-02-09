@@ -1,18 +1,18 @@
 ﻿using ClassLibrary1;
-using Xunit;
+using NUnit.Framework;
 
 namespace Tests
 {
     public class TestClass
     {
-        [Fact]
+        [Test]
         public void Test()
         {
             var class1 = new Class1();
 
             class1.Run();
 
-            Assert.Equal(true,true);
+            Assert.AreEqual(true,true);
         }
     }
 }
